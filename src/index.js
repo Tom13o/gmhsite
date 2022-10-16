@@ -3,6 +3,25 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { initializeApp } from "firebase/app";
+
+// Import the functions you need from the SDKs you need
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyBVS8C3j_ifwxxkigX9IoEeVbYqJdxbU3o",
+  authDomain: "group-mental-health.firebaseapp.com",
+  projectId: "group-mental-health",
+  storageBucket: "group-mental-health.appspot.com",
+  messagingSenderId: "381515134292",
+  appId: "1:381515134292:web:327b2c8f5074b348dd04c1"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+alert(app);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
