@@ -9,6 +9,8 @@ import LandingContainer from './pages/LandingContainer';
 import LandingPage from './pages/LandingPage';
 import SignUp from './pages/SignUp';
 import Login from './pages/Login';
+import HomeLanding from './pages/HomeLanding';
+import Groups from './pages/Groups';
 
 export default function App() {
   return (
@@ -19,7 +21,10 @@ export default function App() {
         <Route exact path="/" element={<LandingPage />} />
         <Route path="contact" element={<Contact />} />
       </Route>
-      <Route path="/home" element={<PrivateRoute><HomePage /></PrivateRoute>} />
+      <Route path="/home" element={<PrivateRoute><HomeLanding /></PrivateRoute>}>
+        <Route exact path="/home" element={<HomePage />} />
+        <Route path="/home/groups" element={<Groups />} />
+      </Route>
       <Route path="/signup" element={<SignUp />} />
       <Route path="/login" element={<Login />} />
     </Routes>
