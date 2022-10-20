@@ -18,14 +18,16 @@ export default function SignUp() {
                     // TODO: handle error when account already exists
                     await createUserWithEmailAndPassword(auth, email.value, password.value)
                     .then(async function(response) {
-                        await setDoc(doc(db, "privateusers", response.user.uid), {
+                        await setDoc(doc(db, "users", response.user.uid), {
                             username: username.value,
-                            email: email.value
-                        });
-                        await setDoc(doc(db, "publicusers", username.value), {
-                            uid: response.user.uid,
+                            email: email.value,
                             firstname: firstname.value,
-                            lastname: lastname.value
+                            lastname: lastname.value,
+                            groups: [],
+                            invitedgroups: []
+                        });
+                        await setDoc(doc(db, "USERLOOKUP", username.value), {
+                            uid: response.user.uid
                         });
                     })
                 } catch (error) {
@@ -41,7 +43,7 @@ export default function SignUp() {
 
     async function checkUser(username) {
         return new Promise(async function(resolve) {
-            await getDoc(doc(db, "publicusers/" + username))
+            await getDoc(doc(db, "USERLOOKUP/" + username))
                 .then(function (response) {
                         document.getElementById("exists").textContent = response.exists() ? "Sorry, but this username is taken." : "Username is free to use!";
                         console.log(response.exists() + "incheckuser");
