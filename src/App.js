@@ -1,5 +1,5 @@
-import React from 'react'
-import { Route, Routes } from 'react-router'
+import React from 'react';
+import { Route, Routes } from 'react-router';
 import HomePage from './pages/HomePage';
 import './App.css';
 import { AuthProvider } from './auth';

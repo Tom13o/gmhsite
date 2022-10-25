@@ -1,9 +1,11 @@
-import React from 'react'
-import { Outlet, Link } from 'react-router-dom'
+import React from 'react';
+import { Outlet, Link } from 'react-router-dom';
+import { DBProvider } from '../db';
 
 export default function HomeLanding() {
     return(
         <>
+            <DBProvider>
             <div> {/* horizontal navigation */}
                 {/*
                     PFP @username
@@ -21,6 +23,7 @@ export default function HomeLanding() {
                 </div>
                 <Outlet />
             </div>
+            </DBProvider>
         </>
     )
 }
