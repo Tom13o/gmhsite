@@ -52,7 +52,7 @@ export default function Groups() {
     // i cant even test this code i don't know if it works
     return(
         <>
-            <div className="addGroupModal" style={{display: modal ? "block" : "none", position: "absolute", top: "400px", left: "100px"}}> {/* why */}
+            <div className="add-group-modal" style={{display: modal ? "block" : "none", position: "absolute", top: "400px", left: "100px"}}> {/* why */}
                 <form onSubmit={handleGroupCreation}>
                     <input name="groupname" type="text" placeholder="Group Name" />
                     <button type="submit">Create Group</button>

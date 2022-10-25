@@ -11,6 +11,7 @@ import SignUp from './pages/SignUp';
 import Login from './pages/Login';
 import HomeLanding from './pages/HomeLanding';
 import Groups from './pages/Groups';
+import Group from './pages/Group';
 
 export default function App() {
   return (
@@ -24,6 +25,7 @@ export default function App() {
       <Route path="/home" element={<PrivateRoute><HomeLanding /></PrivateRoute>}>
         <Route exact path="/home" element={<HomePage />} />
         <Route path="/home/groups" element={<Groups />} />
+        <Route path="/home/groups/:groupID" element={<Group />} />
       </Route>
       <Route path="/signup" element={<SignUp />} />
       <Route path="/login" element={<Login />} />

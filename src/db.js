@@ -17,9 +17,9 @@ export function DBProvider({ children }) {
             // might have to use state?
                 await getDoc(doc(db, "users", currentUser.uid))
                     .then(function (response) {
-                        tempDB[currentUser.uid] = response.data();
+                        tempDB["user"] = response.data();
                         console.dir(response.data());
-                        tempDB[currentUser.uid]["groups"].forEach(element => {
+                        tempDB["user"]["groups"].forEach(element => {
                             getDoc(doc(db, "groups", element))
                                 .then(function (response2) {
                                     tempDB[element] = response2.data();

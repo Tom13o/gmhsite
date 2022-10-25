@@ -1,8 +1,11 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { getAuth, signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+import { DBContext } from '../db';
 
 export default function HomePage() {
+    const { DB } = useContext(DBContext);
+
     const auth = getAuth();
     const nav = useNavigate();
     function handleSignOut() {
@@ -12,7 +15,7 @@ export default function HomePage() {
 
     return (
         <>
-            <p>among</p>
+            <p>Welcome Back, {DB["user"]["firstname"]}!</p>
             <input type="button" value="Sign Out" onClick={handleSignOut} />
             <div>
                 
