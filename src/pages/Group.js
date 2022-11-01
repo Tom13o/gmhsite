@@ -8,7 +8,7 @@ export default function Group() {
 
     return (
         <>
-            <p>{DB[groupID][name]}</p>
+            <p>{DB[groupID]["name"]}</p>
         </>
     )
 }

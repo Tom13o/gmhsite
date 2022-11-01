@@ -15,22 +15,22 @@ import Group from './pages/Group';
 
 export default function App() {
   return (
-    <>
-    <AuthProvider>
-    <Routes>
-      <Route path="/" element={<LandingContainer />}>
-        <Route exact path="/" element={<LandingPage />} />
-        <Route path="contact" element={<Contact />} />
-      </Route>
-      <Route path="/home" element={<PrivateRoute><HomeLanding /></PrivateRoute>}>
-        <Route exact path="/home" element={<HomePage />} />
-        <Route path="/home/groups" element={<Groups />} />
-        <Route path="/home/groups/:groupID" element={<Group />} />
-      </Route>
-      <Route path="/signup" element={<SignUp />} />
-      <Route path="/login" element={<Login />} />
-    </Routes>
-    </AuthProvider>
-    </>
+    <div style={{height: "100vh"}}>
+      <AuthProvider>
+      <Routes>
+        <Route path="/" element={<LandingContainer />}>
+          <Route exact path="/" element={<LandingPage />} />
+          <Route path="contact" element={<Contact />} />
+        </Route>
+        <Route path="/home" element={<PrivateRoute><HomeLanding /></PrivateRoute>}>
+          <Route exact path="/home" element={<HomePage />} />
+          <Route path="/home/groups" element={<Groups />} />
+          <Route path="/home/groups/:groupID" element={<Group />} />
+        </Route>
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/login" element={<Login />} />
+      </Routes>
+      </AuthProvider>
+    </div>
   );
 }

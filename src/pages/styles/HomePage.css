@@ -1,0 +1,40 @@
+.vertical-nav {
+    list-style-type: none;
+    outline: solid;
+    margin: 0;
+    padding: 10px;
+    width: 300px;
+    box-sizing: border-box;
+}
+
+.vertical-nav>li {
+    width: 280px;
+    background: red;
+}
+
+.nav-and-content {
+    display: flex;
+    flex-direction: row;
+    box-sizing: border-box;
+    padding: 20px;
+    height: 100%;
+}
+
+.content {
+    outline: solid;
+    display: inline-block;
+}
+
+.logo-and-title>img {
+    width: 64px;
+}
+
+.title {
+    margin: 0;
+}
+
+/* Mobile */
+
+@media screen and (max-width: 480px)  {
+    
+}

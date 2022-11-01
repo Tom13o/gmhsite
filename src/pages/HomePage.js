@@ -14,12 +14,12 @@ export default function HomePage() {
     }
 
     return (
-        <>
+        <div className="content">
             <p>Welcome Back, {DB["user"]["firstname"]}!</p>
             <input type="button" value="Sign Out" onClick={handleSignOut} />
             <div>
                 
             </div>
-        </>
+        </div>
     )
 }
