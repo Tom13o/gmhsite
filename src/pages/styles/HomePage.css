@@ -9,7 +9,12 @@
 
 .vertical-nav>li {
     width: 280px;
+    margin: 5px 0;
+}
+
+.vertical-nav>li:hover {
     background: red;
+    border-radius: 20px;
 }
 
 .nav-and-content {
