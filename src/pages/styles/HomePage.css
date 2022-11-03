@@ -10,6 +10,9 @@
 .vertical-nav>li {
     width: 280px;
     margin: 5px 0;
+    text-align: center;
+    font-size: 30px;
+    transition: border-radius 0.2s linear, background 0.2s ease-out;
 }
 
 .vertical-nav>li:hover {
@@ -30,12 +33,19 @@
     display: inline-block;
 }
 
+.logo-and-title {
+    padding: 20px 0 !important;
+}
+
 .logo-and-title>img {
     width: 64px;
+    vertical-align: middle;
 }
 
 .title {
     margin: 0;
+    margin-left: 10px;
+    display: inline;
 }
 
 /* Mobile */
