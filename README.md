@@ -1,4 +1,4 @@
-"Group Mental Health Site" (the name is pending) (maybe Watercooler?)
+Watercooler
 a platform that allows groups of people to post daily statuses pertaining to their mental health & wellbeing
 builds a better understanding of community and attitudes
 aims to destigmatise mental health in the workplace and allows for open discussions and dialogues
