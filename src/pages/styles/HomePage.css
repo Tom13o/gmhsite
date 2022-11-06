@@ -1,0 +1,128 @@
+.vertical-nav {
+    list-style-type: none;
+    outline: solid;
+    margin: 0;
+    padding: 10px;
+    width: 300px;
+    box-sizing: border-box;
+    background:rgb(242, 227, 255);
+}
+
+.vertical-nav>li {
+    width: 280px;
+    margin: 10px 0;
+    text-align: center;
+    font-size: 30px;
+    transition: border-radius 0.2s linear, background 0.2s ease-out;
+    -webkit-transition: border-radius 0.2s linear, background 0.2s ease-out;
+    -moz-transition: border-radius 0.2s linear, background 0.2s ease-out;
+    -ms-transition: border-radius 0.2s linear, background 0.2s ease-out;
+    -o-transition: border-radius 0.2s linear, background 0.2s ease-out;
+}
+
+.vertical-nav>li>a {
+    display: inline-block;
+    padding: 5px 0;
+    width: 100%;
+}
+
+.vertical-nav>li:hover {
+    background: rgb(165, 65, 246);
+    border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -ms-border-radius: 20px;
+    -o-border-radius: 20px;
+}
+
+.vertical-nav>li>* {
+    color: rgb(165, 65, 246);
+    transition: color 0.2s ease-out;
+    -webkit-transition: color 0.2s ease-out;
+    -moz-transition: color 0.2s ease-out;
+    -ms-transition: color 0.2s ease-out;
+    -o-transition: color 0.2s ease-out;
+    text-decoration-line: none;
+    -moz-text-decoration-line: none;
+}
+
+.pfp-and-username>p {
+    margin: 0;
+}
+
+.vertical-nav>li:hover>* {
+    color: white;
+}
+
+.vertical-nav>li>input {
+    color: red;
+}
+
+.nav-and-content {
+    display: flex;
+    flex-direction: row;
+    box-sizing: border-box;
+    padding: 20px;
+    height: 100%;
+}
+
+.content {
+    outline: solid;
+    display: inline-block;
+}
+
+.logo-and-title {
+    margin-top: 0 !important;
+    margin-bottom: 30px !important;
+}
+
+.logo-and-title>a {
+    padding: 20px 0 !important;
+}
+
+.logo-and-title>a>img {
+    width: 64px;
+    vertical-align: middle;
+}
+
+.title {
+    margin: 0;
+    margin-left: 10px;
+    display: inline;
+}
+
+.add-group-modal {
+    /* display: block, or none if not visible */
+    position: absolute;
+    background:rgba(0, 0, 0, 0.5);
+    inset: 0;
+}
+
+.add-group-modal>form {
+    background: rgb(242, 227, 255);
+    position: absolute;
+    inset: 50px;
+    border-radius: 50px;
+    -webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    -ms-border-radius: 50px;
+    -o-border-radius: 50px;
+    text-align: center;
+}
+
+.add-group-modal>form>p {
+    font-size: 50px;
+}
+
+.cancel-add-group {
+    position: absolute;
+    right: 50px;
+    top: 50px;
+    font-size: 50px;
+}
+
+/* Mobile */
+
+@media screen and (max-width: 480px)  {
+    
+}
