@@ -38,6 +38,7 @@ export default function Groups() {
         // do not allow group creation if name is empty
         setModal(false);
         const { groupname } = event.target.elements;
+        // clear the groupname input
         try {
             const groupRef = await addDoc(collection(db, "groups"), {
                 name: groupname.value,
@@ -69,7 +70,6 @@ export default function Groups() {
             tempDB["user"]["groups"].push(groupRef.id);
             setDB(tempDB);
             fetchData();
-            // reload data fetch, or add group document directly to DBContext
         } catch (error) {
             alert(error);
         }

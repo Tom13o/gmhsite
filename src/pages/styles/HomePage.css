@@ -68,7 +68,26 @@
 
 .content {
     outline: solid;
-    display: inline-block;
+    display: grid;
+    grid-template-areas: 
+    'name name name'
+    'column1 column2 pulse'
+    'column1 column2 empty'
+    'column1 column2 status';
+    grid-template-columns: 34% 34% 30%;
+    gap: 1%;
+    width: 100%;
+}
+
+.content>.welcome { grid-area: name; }
+.content>.column-one { grid-area: column1; }
+.content>.column-two { grid-area: column2; }
+.content>.pulse { grid-area: pulse; }
+.content>.post-status-prompt { grid-area: status;}
+
+.content>[class^="column"] {
+    border: 2px solid red;
+    width: 100%;
 }
 
 .logo-and-title {
