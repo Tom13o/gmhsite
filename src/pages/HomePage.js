@@ -16,11 +16,8 @@ export default function HomePage() {
     return (
         <div className="content">
             <p>Welcome Back, {DB["user"]["firstname"]}!</p>
-            <p>{DB[DB["user"]["groups"][0]]["name"]}</p> {/* check if groups are fetched before home is rendered */}
+            <p>{DB["user"]["groups"].length > 0 ? DB[DB["user"]["groups"][0]]["name"] : ""}</p> {/* check if groups are fetched before home is rendered */}
             <input type="button" value="Sign Out" onClick={handleSignOut} />
-            <div>
-                
-            </div>
         </div>
     )
 }

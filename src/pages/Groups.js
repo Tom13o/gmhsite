@@ -8,6 +8,17 @@ export default function Groups() {
     const { currentUser } = useContext(AuthContext);
     const [modal, setModal] = useState(false);
     const { DB, setDB } = useContext(DBContext);
+
+    const handleLeaveGroup = async event => {
+        event.preventDefault()
+        const { target } = event.target;
+        if (DB[target.parentElement.key][members][currentUser.uid][owner] == true && event.target.value == "Leave Group") {
+            event.target.value = "Wait! You are the owner of this group. If you leave the group before transferring ownership, the group will be deleted."
+        } else {
+            
+        }
+    }
+
     const handleGroupCreation = async event => {
         event.preventDefault()
         // do not allow group creation if name is empty
@@ -68,7 +79,7 @@ export default function Groups() {
                     <div key={group}>
                     <p>{group}</p>
                     <p>{DB[group]["name"]}</p>
-                    <input type="button" value="Leave Group (not functional)" />
+                    <input type="button" value="Leave Group" onClick={handleLeaveGroup}/> {/* Value of button is used in handleLeaveGroup*/}
                     </div>
                 ))}
             </div>

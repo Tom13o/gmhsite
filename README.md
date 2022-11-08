@@ -1,23 +1,11 @@
-Watercooler
-a platform that allows groups of people to post daily statuses pertaining to their mental health & wellbeing
-builds a better understanding of community and attitudes
-aims to destigmatise mental health in the workplace and allows for open discussions and dialogues
+Watercooler\
+a platform that allows groups of people to post daily statuses pertaining to their mental health & wellbeing\
+builds a better understanding of community and attitudes\
+aims to destigmatise mental health in the workplace and allows for open discussions and dialogues\
 
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+ignore this\
 
 ### `npm test`
 
