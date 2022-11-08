@@ -38,7 +38,9 @@ function RefreshButton() {
     return (
         <input type="button" value="Refresh" onClick={() => {
             setFetched(false);
-            fetchData()
+            fetchData().then(() => {
+                setFetched(true);
+            })
         }}/>
     )
 }

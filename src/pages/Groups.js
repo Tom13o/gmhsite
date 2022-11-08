@@ -1,26 +1,40 @@
 import React, { useContext, useState } from 'react'
 import { db } from "../index";
-import { collection, addDoc, updateDoc, arrayUnion, doc } from "firebase/firestore";
+import { collection, addDoc, updateDoc, arrayUnion, doc, arrayRemove } from "firebase/firestore";
 import { DBContext } from '../db';
 import { AuthContext } from "../auth";
+import { Link } from 'react-router-dom';
 
 export default function Groups() {
     const { currentUser } = useContext(AuthContext);
     const [modal, setModal] = useState(false);
-    const { DB, setDB } = useContext(DBContext);
+    const { fetchData, DB, setDB } = useContext(DBContext);
 
     const handleLeaveGroup = async event => {
-        event.preventDefault()
-        const { target } = event.target;
-        if (DB[target.parentElement.key][members][currentUser.uid][owner] == true && event.target.value == "Leave Group") {
-            event.target.value = "Wait! You are the owner of this group. If you leave the group before transferring ownership, the group will be deleted."
+        event.preventDefault();
+        const target = event.target;
+        const group = target.parentElement.dataset.groupid;
+        console.dir(group);
+        const userInGroup = DB[group]["members"].filter(member => member.id === currentUser.uid)[0];
+        if (userInGroup["owner"] === true) {
+            alert("You are the owner of this group! To leave, either transfer ownership before leaving, or delete the group.")
         } else {
-            
+            await updateDoc(doc(db, "groups", group), {
+                members: arrayRemove(userInGroup)
+            })
+            .then(
+                await updateDoc(doc(db, "users", currentUser.uid), {
+                    groups: arrayRemove(group)
+                })
+                .then(() => {
+                    fetchData();
+                })
+            )
         }
     }
 
     const handleGroupCreation = async event => {
-        event.preventDefault()
+        event.preventDefault();
         // do not allow group creation if name is empty
         setModal(false);
         const { groupname } = event.target.elements;
@@ -54,6 +68,7 @@ export default function Groups() {
             }
             tempDB["user"]["groups"].push(groupRef.id);
             setDB(tempDB);
+            fetchData();
             // reload data fetch, or add group document directly to DBContext
         } catch (error) {
             alert(error);
@@ -76,10 +91,11 @@ export default function Groups() {
             <input type="button" onClick={() => setModal(!modal)} value="Create New Group" />
             <div>
                 {DB["user"]["groups"].map(group => (
-                    <div key={group}>
+                    <div key={group} data-groupid={group}>
                     <p>{group}</p>
                     <p>{DB[group]["name"]}</p>
-                    <input type="button" value="Leave Group" onClick={handleLeaveGroup}/> {/* Value of button is used in handleLeaveGroup*/}
+                    <Link to={"/home/groups/" + group}>Group Page</Link>
+                    <input type="button" value="Leave Group" onClick={handleLeaveGroup}/>
                     </div>
                 ))}
             </div>

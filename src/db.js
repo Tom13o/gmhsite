@@ -23,29 +23,32 @@ export function DBProvider({ children }) {
         })
     }
     
-    const fetchData = async () => {
+    const fetchData = async () => { // move fetched out of this function - why? so that other functions can simply fetch data without unrendering the app
         // get data code here
         // might have to use state?
         tempDB = {};
-        await getDoc(doc(db, "users", currentUser.uid))
-        .then(function (response) {
-            tempDB["user"] = response.data();
-            const promiseArray = tempDB["user"]["groups"].map(getGroup);
-            
-            Promise.all(promiseArray).then(() => {
-                setDB(tempDB);
-                console.log("DB fetched. DB:");
-                console.dir(DB);
-                setFetched(true);
-            })
-        }
-        )
-        // set code here
-        
+        return new Promise(async function (resolve) {
+            await getDoc(doc(db, "users", currentUser.uid))
+            .then(function (response) {
+                tempDB["user"] = response.data();
+                const promiseArray = tempDB["user"]["groups"].map(getGroup);
+                
+                Promise.all(promiseArray).then(() => {
+                    setDB(tempDB);
+                    console.log("DB fetched. DB:");
+                    console.dir(DB);
+                    resolve();
+                })
+            }
+            )
+        })
+
     }
     
     useEffect(() => {
-        fetchData().catch(console.error);
+        fetchData().then(() => {
+            setFetched(true);
+        });
         // eslint-disable-next-line
     }, [])
 
