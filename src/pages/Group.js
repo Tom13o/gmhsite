@@ -68,13 +68,21 @@ export default function Group() {
                         alert("Most recent status was today.")
                     } else {
                         await updateDoc(doc(db, "groups", chosenGroup), {
-                            [`members.${i}.statuses`]: arrayUnion({
-                                feeling: feeling,
-                                rating: rating,
-                                task: task,
-                                date: Date()
+                            ["members[0].statuses"]: arrayUnion(
+                                // {
+                                // feeling: feeling,
+                                // rating: rating,
+                                // task: task,
+                                // date: Date()
+                                // }
+                                "among us"
+                            )
+                        }).then(() => {
+                            fetchData().then(() => {
+                                alert(DB[chosenGroup]["members"][i]["statuses"]);
                             })
                         })
+                        alert("done")
                     }
                 }
             }
