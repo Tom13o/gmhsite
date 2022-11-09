@@ -67,7 +67,7 @@ export default function Group() {
                     if (isToday(Date(member["statuses"][member["statuses"].length-1]["date"]))) {
                         alert("Most recent status was today.")
                     } else {
-                        const str = "members." + i + ".statuses"
+                        const str = "members[" + i + "].statuses";
                         await updateDoc(doc(db, "groups", chosenGroup), {
                             [str]: arrayUnion({
                                 feeling: feeling,
