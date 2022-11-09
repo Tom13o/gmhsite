@@ -80,8 +80,8 @@
 }
 
 .content>.welcome { grid-area: name; }
-.content>.column-one { grid-area: column1; }
-.content>.column-two { grid-area: column2; }
+.content>.column-1 { grid-area: column1; }
+.content>.column-2 { grid-area: column2; }
 .content>.pulse { grid-area: pulse; }
 .content>.post-status-prompt { grid-area: status;}
 
