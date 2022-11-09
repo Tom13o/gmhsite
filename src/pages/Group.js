@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { useNavigate, useParams } from "react-router-dom";
 import { DBContext } from '../db';
 import { AuthContext } from '../auth';
-import { arrayRemove, deleteDoc, doc, updateDoc } from 'firebase/firestore';
+import { arrayRemove, arrayUnion, deleteDoc, doc, updateDoc } from 'firebase/firestore';
 import { db } from '..';
 import { useState } from 'react';
 
@@ -46,12 +46,37 @@ export default function Group() {
         })
     }
 
+    const isToday = date => {
+        const today = new Date();
+        return (date.getDate() === today.getDate() && 
+        date.getMonth() === today.getMonth() && 
+        date.getFullYear() === today.getFullYear())
+    }
+
     const handleAddStatus = async event => {
         event.preventDefault();
-        const { feeling, rating, task } = event.target.elements;
+        const { chosenGroup, feeling, rating, task } = event.target.elements;
         alert(feeling.value + " " + rating.value + " " + task.value);
         alert("This will actually post a status soon. WIP")
+        // remember username in status
+        fetchData()
+        .then(async () => {
+            for (var i = 0; i < DB[chosenGroup]["members"].length; i++) {
+                const member = DB[chosenGroup]["members"][i];
+                if (member["id"] === currentUser.uid) {
+                    if (isToday(Date(member["statuses"][member["statuses"].length-1]["date"]))) {
+                        alert("Most recent status was today.")
+                    } else {
+                        await updateDoc(doc(db, "groups", groupID), {
+                            ["members." + i + ".statuses"]: arrayUnion("among")
+                        })
+                    }
+                }
+            }
+        })
     }
+
+    // TODO: improve form for accessiblity
 
     return (
         <>
@@ -59,6 +84,12 @@ export default function Group() {
                 <form onSubmit={handleAddStatus}>
                     <input type="button" className='cancel-add-status' value="X" onClick={() => setAddStatusModal(false)}></input>
                     <h1>Add Today's Status</h1>
+                    <select name="chosenGroup">
+                        {DB["user"]["groups"].map(group => (
+                            <option key={group} value={group} selected={group === groupID}>{DB[group]["name"]}</option>
+                        ))}
+                    </select>
+                    <br />
                     <p>Today, {DB["user"]["firstname"]} is feeling...</p><input name="feeling" type="text" placeholder="?" />
                     <br/>
                     <p>How good/motivated do you feel?</p>

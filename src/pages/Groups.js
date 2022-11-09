@@ -42,12 +42,13 @@ export default function Groups() {
         groupname.value = "";
         // clear the groupname input
         try {
+            const date = Date();
             const groupRef = await addDoc(collection(db, "groups"), {
                 name: groupnamevalue,
                 members: [{
                     id: currentUser.uid,
-                    joinDate: Date(),
-                    pastStatuses: [],
+                    joinDate: date,
+                    statuses: [],
                     owner: true
                 }],
                 invitedMembers: []
@@ -61,9 +62,8 @@ export default function Groups() {
                 name: groupnamevalue,
                 members: [{
                     id: currentUser.uid,
-                    // joinDate: ,
-                    status: {},
-                    pastStatuses: [],
+                    joinDate: date,
+                    statuses: [],
                     owner: true
                 }],
                 invitedMembers: []
