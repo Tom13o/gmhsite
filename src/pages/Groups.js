@@ -49,7 +49,8 @@ export default function Groups() {
                     id: currentUser.uid,
                     joinDate: date,
                     statuses: [],
-                    owner: true
+                    owner: true,
+                    username: DB["user"]["username"]
                 }],
                 invitedMembers: []
             });
@@ -64,7 +65,8 @@ export default function Groups() {
                     id: currentUser.uid,
                     joinDate: date,
                     statuses: [],
-                    owner: true
+                    owner: true,
+                    username: DB["user"]["username"]
                 }],
                 invitedMembers: []
             }
