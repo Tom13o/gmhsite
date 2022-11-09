@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 
 export default function Groups() {
     const { currentUser } = useContext(AuthContext);
-    const [modal, setModal] = useState(false);
+    const [addGroupModal, setAddGroupModal] = useState(false);
     const { fetchData, DB, setDB } = useContext(DBContext);
 
     const handleLeaveGroup = async event => {
@@ -36,16 +36,17 @@ export default function Groups() {
     const handleGroupCreation = async event => {
         event.preventDefault();
         // do not allow group creation if name is empty
-        setModal(false);
+        setAddGroupModal(false);
         const { groupname } = event.target.elements;
+        const groupnamevalue = groupname.value;
+        groupname.value = "";
         // clear the groupname input
         try {
             const groupRef = await addDoc(collection(db, "groups"), {
-                name: groupname.value,
+                name: groupnamevalue,
                 members: [{
                     id: currentUser.uid,
-                    // joinDate: ,
-                    status: {},
+                    joinDate: Date(),
                     pastStatuses: [],
                     owner: true
                 }],
@@ -57,7 +58,7 @@ export default function Groups() {
             })
             var tempDB = DB;
             tempDB[groupRef.id] = {
-                name: groupname.value,
+                name: groupnamevalue,
                 members: [{
                     id: currentUser.uid,
                     // joinDate: ,
@@ -78,17 +79,17 @@ export default function Groups() {
     // this code might still be doodoo im not sure
     return(
         <>
-            <div className="add-group-modal" style={{display: modal ? "block" : "none"}}  onClick={(event) => {if (event.target === event.currentTarget){setModal(false)}}}>
+            <div className="add-group-modal" style={{display: addGroupModal ? "block" : "none"}}  onClick={(event) => {if (event.target === event.currentTarget){setAddGroupModal(false)}}}>
                 <form onSubmit={handleGroupCreation}>
-                    <input type="button" className='cancel-add-group' value="X" onClick={() => setModal(false)}></input>
-                    <p>Create New Group</p>
+                    <input type="button" className='cancel-add-group' value="X" onClick={() => setAddGroupModal(false)}></input>
+                    <h1>Create New Group</h1>
                     <input name="groupname" type="text" placeholder="Group Name" />
                     <br />
                     <button type="submit">Create Group</button>
                 </form>
             </div>
             Groups
-            <input type="button" onClick={() => setModal(!modal)} value="Create New Group" />
+            <input type="button" onClick={() => setAddGroupModal(true)} value="Create New Group" />
             <div>
                 {DB["user"]["groups"].map(group => (
                     <div key={group} data-groupid={group}>

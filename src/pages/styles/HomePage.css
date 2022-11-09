@@ -84,6 +84,7 @@
 .content>.column-2 { grid-area: column2; }
 .content>.pulse { grid-area: pulse; }
 .content>.post-status-prompt { grid-area: status;}
+.content>.no-group-prompt { grid-area: column1 / column1 / column1 / column2}
 
 .content>[class^="column"] {
     border: 2px solid red;
@@ -110,14 +111,14 @@
     display: inline;
 }
 
-.add-group-modal {
+.add-group-modal, .add-status-modal {
     /* display: block, or none if not visible */
     position: absolute;
     background:rgba(0, 0, 0, 0.5);
     inset: 0;
 }
 
-.add-group-modal>form {
+.add-group-modal>form, .add-status-modal>form {
     background: rgb(242, 227, 255);
     position: absolute;
     inset: 50px;
@@ -129,11 +130,17 @@
     text-align: center;
 }
 
-.add-group-modal>form>p {
+.add-group-modal>form>h1, .add-status-modal>form>h1 {
     font-size: 50px;
 }
 
-.cancel-add-group {
+.add-status-modal>form>p {
+    font-size: 20px;
+    display: inline;
+    margin-right: 10px;
+}
+
+.cancel-add-group, .cancel-add-status {
     position: absolute;
     right: 50px;
     top: 50px;
