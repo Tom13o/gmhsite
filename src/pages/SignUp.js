@@ -77,6 +77,7 @@ export default function SignUp() {
         // FIXME: maybe dont want to go back to / from signup? nav(-1)?? vv
         // TODO: make this a table maybe? so textboxes are aligned? this'll change anyway
         // TODO: make component for cleaner code
+        // TODO: ask for pronouns
         <>
             <Link to="/">Back</Link> 
             <p>Sign Up</p>

@@ -15,7 +15,6 @@ import Group from './pages/Group';
 
 export default function App() {
   return (
-    <div style={{height: "100vh"}}>
       <AuthProvider>
       <Routes>
         <Route path="/" element={<LandingContainer />}>
@@ -31,6 +30,5 @@ export default function App() {
         <Route path="/login" element={<Login />} />
       </Routes>
       </AuthProvider>
-    </div>
   );
 }
