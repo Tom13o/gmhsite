@@ -62,7 +62,8 @@ export default function Group() {
         fetchData()
         .then(async () => {
             alert("0");
-            for (var i = 0; i < DB[chosenGroup]["members"].length; i++) {
+            alert(DB[chosenGroup]["members"].length);
+            for (let i = 0; i < DB[chosenGroup]["members"].length; i++) {
                 alert("1");
                 const member = DB[chosenGroup]["members"][i];
                 if (member["id"] === currentUser.uid) {
