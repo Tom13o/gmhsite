@@ -56,7 +56,7 @@ export default function Group() {
     const handleAddStatus = async event => {
         event.preventDefault();
         const { chosenGroup, feeling, rating, task } = event.target.elements;
-        alert(feeling.value + " " + rating.value + " " + task.value);
+        alert(feeling.value + " " + rating.value + " " + task.value + " " + chosenGroup.value);
         alert("This will actually post a status soon. WIP");
         fetchData()
         .then(async () => {
