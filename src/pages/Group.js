@@ -58,25 +58,20 @@ export default function Group() {
         const { chosenGroup, feeling, rating, task } = event.target.elements;
         alert(feeling.value + " " + rating.value + " " + task.value);
         alert("This will actually post a status soon. WIP");
-        // remember username in status
         fetchData()
         .then(async () => {
             alert("0");
-            alert(DB[chosenGroup]["members"].length);
-            for (let i = 0; i < DB[chosenGroup]["members"].length; i++) {
+            alert(DB[chosenGroup.value]["members"].length);
+            for (let i = 0; i < DB[chosenGroup.value]["members"].length; i++) {
                 alert("1");
-                const member = DB[chosenGroup]["members"][i];
+                const member = DB[chosenGroup.value]["members"][i];
                 if (member["id"] === currentUser.uid) {
-                    alert("2")
-                    if (member["statuses"].length !== 0) {
-                        alert("3")
-                        if (isToday(Date(member["statuses"][member["statuses"].length-1]["date"]))) {
-                            alert("4")
-                            alert("Most recent status was today.")
-                        } else {
-                            alert("5")
-                            await updateDoc(doc(db, "groups", chosenGroup), {
-                                
+                    alert("2");
+                    if (member["statuses"].length == 0
+                                    ||
+                    !isToday(Date(member["statuses"][member["statuses"].length-1]["date"]))) {
+                        alert("5");
+                            await updateDoc(doc(db, "groups", chosenGroup.value), {
                                 [`members.${i}.statuses`]: arrayUnion(
                                     {
                                     feeling: feeling,
@@ -86,11 +81,13 @@ export default function Group() {
                                     }
                                 )
                             })
+                        } else {
+                            alert("You've already posted a status today!"); // do this a different way pls
                         }
                     }
                 }
             }
-        })
+        )
     }
 
     // TODO: improve form for accessiblity
