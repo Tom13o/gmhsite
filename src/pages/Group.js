@@ -62,27 +62,29 @@ export default function Group() {
         fetchData()
         .then(async () => {
             for (var i = 0; i < DB[chosenGroup]["members"].length; i++) {
+                alert("1");
                 const member = DB[chosenGroup]["members"][i];
                 if (member["id"] === currentUser.uid) {
-                    if (isToday(Date(member["statuses"][member["statuses"].length-1]["date"]))) {
-                        alert("Most recent status was today.")
-                    } else {
-                        await updateDoc(doc(db, "groups", chosenGroup), {
-                            ["members[0].statuses"]: arrayUnion(
-                                // {
-                                // feeling: feeling,
-                                // rating: rating,
-                                // task: task,
-                                // date: Date()
-                                // }
-                                "among us"
-                            )
-                        }).then(() => {
-                            fetchData().then(() => {
-                                alert(DB[chosenGroup]["members"][i]["statuses"]);
+                    alert("2")
+                    if (member["statuses"].length != 0) {
+                        alert("3")
+                        if (isToday(Date(member["statuses"][member["statuses"].length-1]["date"]))) {
+                            alert("4")
+                            alert("Most recent status was today.")
+                        } else {
+                            alert("5")
+                            await updateDoc(doc(db, "groups", chosenGroup), {
+                                
+                                [`members.${i}.statuses`]: arrayUnion(
+                                    {
+                                    feeling: feeling,
+                                    rating: rating,
+                                    task: task,
+                                    date: Date()
+                                    }
+                                )
                             })
-                        })
-                        alert("done")
+                        }
                     }
                 }
             }
