@@ -1,11 +1,15 @@
 .vertical-nav {
     list-style-type: none;
-    outline: solid;
     margin: 0;
     padding: 10px;
     width: 300px;
     box-sizing: border-box;
     background:rgb(242, 227, 255);
+    border-radius: 25px;
+    -webkit-border-radius: 25px;
+    -moz-border-radius: 25px;
+    -ms-border-radius: 25px;
+    -o-border-radius: 25px;
 }
 
 .vertical-nav>li {
@@ -67,28 +71,33 @@
 }
 
 .content {
-    outline: solid;
     display: grid;
-    grid-template-areas: 
+    grid-template-areas:
     'name name name'
     'column1 column2 pulse'
     'column1 column2 empty'
     'column1 column2 status';
     grid-template-columns: 34% 34% 30%;
+    grid-template-rows: 10% 50% 10% 27%;
     gap: 1%;
     width: 100%;
 }
 
-.content>.welcome { grid-area: name; }
-.content>.column-1 { grid-area: column1; }
-.content>.column-2 { grid-area: column2; }
-.content>.pulse { grid-area: pulse; }
-.content>.post-status-prompt { grid-area: status;}
-.content>.no-group-prompt { grid-area: column1 / column1 / column1 / column2}
+.welcome { grid-area: name; }
+.column-1 { grid-area: column1; }
+.column-2 { grid-area: column2; }
+.pulse { grid-area: pulse; }
+.post-status-prompt { grid-area: status;}
+.no-group-prompt { grid-area: column1 / column1 / column1 / column2}
 
 .content>[class^="column"] {
-    border: 2px solid red;
     width: 100%;
+}
+
+.welcome>p {
+    display: inline-block;
+    font-size: 30px;
+    margin: 10px;
 }
 
 .logo-and-title {

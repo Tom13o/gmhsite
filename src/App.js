@@ -13,6 +13,14 @@ import HomeLanding from './pages/HomeLanding';
 import Groups from './pages/Groups';
 import Group from './pages/Group';
 
+export const isToday = date => {
+  const d = new Date(date)
+  const today = new Date();
+  return (d.getDate() === today.getDate() && 
+  d.getMonth() === today.getMonth() && 
+  d.getFullYear() === today.getFullYear())
+}
+
 export default function App() {
   return (
       <AuthProvider>

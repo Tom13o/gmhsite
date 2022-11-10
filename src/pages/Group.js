@@ -2,9 +2,10 @@ import React, { useContext } from 'react';
 import { useNavigate, useParams } from "react-router-dom";
 import { DBContext } from '../db';
 import { AuthContext } from '../auth';
-import { arrayRemove, deleteDoc, doc, updateDoc } from 'firebase/firestore';
+import { arrayRemove, arrayUnion, deleteDoc, doc, updateDoc } from 'firebase/firestore';
 import { db } from '..';
 import { useState } from 'react';
+import { isToday } from '../App';
 
 export default function Group() {
     const { groupID } = useParams();
@@ -15,10 +16,10 @@ export default function Group() {
 
     const handleDeleteGroup = async () => {
 
-        function deleteUserFromGroup(element) {
+        function deleteUsersFromGroup(key) {
             return new Promise((resolve) => {
-                if (element["id"] !== currentUser.uid) {
-                    updateDoc(doc(db, "users", element["id"]), {
+                if (key !== currentUser.uid) {
+                    updateDoc(doc(db, "users", key), {
                         groups: arrayRemove(groupID)
                     })
                     .then(() => {
@@ -30,7 +31,7 @@ export default function Group() {
             })
         }
 
-        const promiseArray = DB[groupID]["members"].map(deleteUserFromGroup);
+        const promiseArray = Object.keys(DB[groupID]["members"]).map(deleteUsersFromGroup);
         
         Promise.all(promiseArray).then(async function () {
             await deleteDoc(doc(db, "groups", groupID))
@@ -48,10 +49,39 @@ export default function Group() {
 
     const handleAddStatus = async event => {
         event.preventDefault();
-        const { feeling, rating, task } = event.target.elements;
-        alert(feeling.value + " " + rating.value + " " + task.value);
-        alert("This will actually post a status soon. WIP")
+        const { chosenGroup, feeling, rating, task } = event.target.elements;
+        alert(feeling.value + " " + rating.value + " " + task.value + " " + chosenGroup.value);
+        fetchData()
+        .then(async () => {
+            const member = DB[chosenGroup.value]["members"][currentUser.uid];
+            if (member["statuses"].length === 0
+                            ||
+            !isToday(member["statuses"][member["statuses"].length-1]["date"])) {
+                await updateDoc(doc(db, "groups", chosenGroup.value), {
+                    [`members.${currentUser.uid}.username`]: DB["user"]["username"],
+                    [`members.${currentUser.uid}.firstname`]: DB["user"]["firstname"],
+                    [`members.${currentUser.uid}.lastname`]: DB["user"]["lastname"],
+                    // [`members.${currentUser.uid}.pronouns`]: DB["user"]["pronouns"],
+                    [`members.${currentUser.uid}.statuses`]: arrayUnion(
+                        {
+                        feeling: feeling.value,
+                        rating: rating.value,
+                        task: task.value,
+                        date: Date()
+                        }
+                    )
+                }).then(() => {
+                    setAddStatusModal(false);
+                    fetchData();
+                })
+            } else {
+                alert("You've already posted a status today!"); // do this a different way pls
+                setAddStatusModal(false);
+            }
+        })
     }
+
+    // TODO: improve form for accessiblity
 
     return (
         <>
@@ -59,6 +89,12 @@ export default function Group() {
                 <form onSubmit={handleAddStatus}>
                     <input type="button" className='cancel-add-status' value="X" onClick={() => setAddStatusModal(false)}></input>
                     <h1>Add Today's Status</h1>
+                    <select name="chosenGroup" defaultValue={groupID}>
+                        {DB["user"]["groups"].map(group => (
+                            <option key={group} value={group}>{DB[group]["name"]}</option>
+                        ))}
+                    </select>
+                    <br />
                     <p>Today, {DB["user"]["firstname"]} is feeling...</p><input name="feeling" type="text" placeholder="?" />
                     <br/>
                     <p>How good/motivated do you feel?</p>

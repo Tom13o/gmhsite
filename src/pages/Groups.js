@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { db } from "../index";
-import { collection, addDoc, updateDoc, arrayUnion, doc, arrayRemove } from "firebase/firestore";
+import { collection, addDoc, updateDoc, arrayUnion, doc, arrayRemove, deleteField } from "firebase/firestore";
 import { DBContext } from '../db';
 import { AuthContext } from "../auth";
 import { Link } from 'react-router-dom';
@@ -8,19 +8,17 @@ import { Link } from 'react-router-dom';
 export default function Groups() {
     const { currentUser } = useContext(AuthContext);
     const [addGroupModal, setAddGroupModal] = useState(false);
-    const { fetchData, DB, setDB } = useContext(DBContext);
+    const { fetchData, DB } = useContext(DBContext);
 
     const handleLeaveGroup = async event => {
         event.preventDefault();
         const target = event.target;
         const group = target.parentElement.dataset.groupid;
-        console.dir(group);
-        const userInGroup = DB[group]["members"].filter(member => member.id === currentUser.uid)[0];
-        if (userInGroup["owner"] === true) {
+        if (DB[group]["members"][currentUser.uid]["owner"] === true) {
             alert("You are the owner of this group! To leave, either transfer ownership before leaving, or delete the group.")
         } else {
             await updateDoc(doc(db, "groups", group), {
-                members: arrayRemove(userInGroup)
+                [`members.${currentUser.uid}`]: deleteField()
             })
             .then(
                 await updateDoc(doc(db, "users", currentUser.uid), {
@@ -42,34 +40,25 @@ export default function Groups() {
         groupname.value = "";
         // clear the groupname input
         try {
+            const date = Date();
             const groupRef = await addDoc(collection(db, "groups"), {
                 name: groupnamevalue,
-                members: [{
-                    id: currentUser.uid,
-                    joinDate: Date(),
-                    pastStatuses: [],
-                    owner: true
-                }],
-                invitedMembers: []
+                members: {
+                    [currentUser.uid]: {
+                        joinDate: date,
+                        statuses: [],
+                        owner: true,
+                        username: DB["user"]["username"],
+                        firstname: DB["user"]["firstname"],
+                        lastname: DB["user"]["lastname"]
+                        // pronouns: DB["user"]["pronouns"]
+                }},
+                invitedMembers: {}
             });
             console.log("Group made with ID: ", groupRef.id);
             await updateDoc(doc(db, "users", currentUser.uid), {
                 groups: arrayUnion(groupRef.id)
             })
-            var tempDB = DB;
-            tempDB[groupRef.id] = {
-                name: groupnamevalue,
-                members: [{
-                    id: currentUser.uid,
-                    // joinDate: ,
-                    status: {},
-                    pastStatuses: [],
-                    owner: true
-                }],
-                invitedMembers: []
-            }
-            tempDB["user"]["groups"].push(groupRef.id);
-            setDB(tempDB);
             fetchData();
         } catch (error) {
             alert(error);

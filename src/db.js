@@ -23,9 +23,8 @@ export function DBProvider({ children }) {
         })
     }
     
-    const fetchData = async () => { // move fetched out of this function - why? so that other functions can simply fetch data without unrendering the app
-        // get data code here
-        // might have to use state?
+    const fetchData = async () => {
+        // make new function, or modify this function, so that a specific, individual document can be fetched
         tempDB = {};
         return new Promise(async function (resolve) {
             await getDoc(doc(db, "users", currentUser.uid))

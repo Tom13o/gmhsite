@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import { getAuth, signOut } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
 import { DBContext } from '../db';
+import { isToday } from '../App';
 
 export default function HomePage() {
     const { DB } = useContext(DBContext);
@@ -13,11 +14,24 @@ export default function HomePage() {
         nav("/"); //FIXME: i guess this could also be back to the login page? something to think about
     }
 
-    // function Status({ status }) {
+    function Status({ member, group }) {
+        // in group settings, toggle between using FirstnameLastname and Username for statuses
+        const status = member["statuses"][member["statuses"].length - 1];
+        return (
+            <div>
+                <p>{member["firstname"]} is feeling...</p>
+                <p>{status["feeling"]},</p>
+                <p>with a rating of {status["rating"]}</p>
+                <p>Today they will:</p> {/* add pronoun functionality */}
+                <p>{status["task"]}</p>
+            </div>
+        )
+    }
 
-    // }
+    // isToday(member["statuses"][member["statuses"].length-1]["date"]))
 
     function Column({ groupId, empty, column }) {
+        // add key
         return (
         <>
             {!empty &&
@@ -25,6 +39,11 @@ export default function HomePage() {
                 <p>Props: groupId={groupId}, empty={empty ? "True" : "False"}</p>
                 <p>{DB[groupId]["name"]}</p>
                 <Link to={"/home/groups/" + groupId}>Group Page</Link>
+
+                {Object.keys(DB[groupId]["members"]).map(member => (
+                    DB[groupId]["members"][member]["statuses"].length !== 0 && isToday(DB[groupId]["members"][member]["statuses"][DB[groupId]["members"][member]["statuses"].length - 1]["date"]) ? <Status key={member} member={DB[groupId]["members"][member]} group={groupId} /> : <></>
+                ))}
+
             </div>
             }
 
@@ -48,12 +67,11 @@ export default function HomePage() {
     return (
         <div className="content">
             <div className="welcome">
-                <p style={{display: "inline"}}>Welcome Back, {DB["user"]["firstname"]}!  </p>
+                <p>Welcome Back, {DB["user"]["firstname"]}!</p>
                 <input type="button" value="Sign Out" onClick={handleSignOut} />
             </div>
             
-            {/* the code below is fundamentally stupid code and will likely lead to bugs down the line and I will have to pull my hair trying to figure out what I was trying to write, but that's what code's about
-            if 0 groups, <NoGroupPrompt />. if 1 group, <Column /> with data and <Column /> without data, if 2 groups, <Column /> <Column /> */}
+            {/* if 0 groups, <NoGroupPrompt />. if 1 group, <Column /> with data and <Column /> without data, if 2 groups, <Column /> <Column /> */}
             {DB["user"]["groups"].length > 0 ? <Column groupId={DB["user"]["groups"][0]} empty={false} column={1} /> : <NoGroupPrompt />}
             
             {DB["user"]["groups"].length > 1 && <Column groupId={DB["user"]["groups"][1]} empty={false} column={2} />}
