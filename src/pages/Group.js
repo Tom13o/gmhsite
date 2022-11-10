@@ -57,10 +57,11 @@ export default function Group() {
         event.preventDefault();
         const { chosenGroup, feeling, rating, task } = event.target.elements;
         alert(feeling.value + " " + rating.value + " " + task.value);
-        alert("This will actually post a status soon. WIP")
+        alert("This will actually post a status soon. WIP");
         // remember username in status
         fetchData()
         .then(async () => {
+            alert("0");
             for (var i = 0; i < DB[chosenGroup]["members"].length; i++) {
                 alert("1");
                 const member = DB[chosenGroup]["members"][i];
