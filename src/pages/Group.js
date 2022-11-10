@@ -66,7 +66,7 @@ export default function Group() {
                 const member = DB[chosenGroup]["members"][i];
                 if (member["id"] === currentUser.uid) {
                     alert("2")
-                    if (member["statuses"].length != 0) {
+                    if (member["statuses"].length !== 0) {
                         alert("3")
                         if (isToday(Date(member["statuses"][member["statuses"].length-1]["date"]))) {
                             alert("4")
