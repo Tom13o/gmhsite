@@ -16,10 +16,7 @@ export default function HomeLanding() {
                                 <p className="title">Watercooler</p>
                             </Link>
                         </li>
-                        <li className="pfp-and-username">
-                            <Link to="/profile">PFP @username</Link>
-                            {/* Links to profile */}
-                        </li>
+                        <PFPAndUsername />
                         <li><Link to="/notifications">Notifications</Link></li>
                         <li><Link to="/home/groups">Groups</Link></li>
                         <li><Link to="/settings">Settings</Link></li>
@@ -29,6 +26,16 @@ export default function HomeLanding() {
                 </div>
             </DBProvider>
         </>
+    )
+}
+
+function PFPAndUsername() {
+    const { DB } = useContext(DBContext);
+
+    return (
+        <li className="pfp-and-username">
+            <Link to="/profile">PFP @{DB["user"]["username"]}</Link>
+        </li>
     )
 }
 

@@ -85,7 +85,7 @@ export default function Group() {
 
     return (
         <>
-            <div className="add-status-modal" style={{display: addStatusModal ? "block" : "none"}}>
+            <div className="add-status-modal" style={{display: addStatusModal ? "block" : "none"}} onClick={(event) => {if (event.target === event.currentTarget){setAddStatusModal(false)}}}>
                 <form onSubmit={handleAddStatus}>
                     <input type="button" className='cancel-add-status' value="X" onClick={() => setAddStatusModal(false)}></input>
                     <h1>Add Today's Status</h1>

@@ -72,6 +72,7 @@
 
 .content {
     display: grid;
+    margin-left: 20px;
     grid-template-areas:
     'name name name'
     'column1 column2 pulse'
@@ -87,11 +88,27 @@
 .column-1 { grid-area: column1; }
 .column-2 { grid-area: column2; }
 .pulse { grid-area: pulse; }
-.post-status-prompt { grid-area: status;}
+.post-status-prompt { grid-area: status; background-color: blue;}
 .no-group-prompt { grid-area: column1 / column1 / column1 / column2}
 
-.content>[class^="column"] {
+.content>.column {
     width: 100%;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    border: 2px solid black;
+    border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -ms-border-radius: 20px;
+    -o-border-radius: 20px;
+    text-align: center;
+    cursor: pointer;
+    padding: 0 20px 20px;
+}
+
+.content>.column>.group-name {
+    font-size: 40px;
+    margin: 5px;
 }
 
 .welcome>p {
@@ -154,6 +171,93 @@
     right: 50px;
     top: 50px;
     font-size: 50px;
+}
+
+.status-div {
+    background-color: rgb(242, 227, 255);
+    border-radius: 15px;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    -ms-border-radius: 15px;
+    -o-border-radius: 15px;
+    padding: 10px;
+    text-align: start;
+    cursor: auto;
+    margin-bottom: 20px;
+}
+
+.status-div>p {
+    margin: 0;
+}
+
+.status-div>.feeling1 {
+    font-size: 20px;
+}
+
+.status-div>.feeling2, .status-div>.task {
+    font-size: 40px;
+    margin-left: 40px;
+    margin-top: -8px;
+}
+
+.status-div>.rating {
+    font-size: 25px;
+}
+
+.rating-span {
+    font-weight: bold;
+}
+
+.status-div>.todaytheywill {
+    font-size: 20px;
+}
+
+.pulse {
+    border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -ms-border-radius: 20px;
+    -o-border-radius: 20px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.pulse>p {
+    font-size: 40px;
+    text-align: center;
+    margin: 5px;
+    margin-top: 0px;
+}
+
+.pulse-group {
+    background-color: rgb(242, 227, 255);
+    border: 2px solid black;
+    border-radius: 15px;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    -ms-border-radius: 15px;
+    -o-border-radius: 15px;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.pulse-group>p {
+    margin: 5px;
+}
+
+.content-group {
+
+}
+
+.group {
+    background-color: rgb(242, 227, 255);
+    border: 2px solid black;
+    border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -ms-border-radius: 20px;
+    -o-border-radius: 20px;
+    padding: 10px;
 }
 
 /* Mobile */

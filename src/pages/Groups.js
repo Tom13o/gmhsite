@@ -3,12 +3,13 @@ import { db } from "../index";
 import { collection, addDoc, updateDoc, arrayUnion, doc, arrayRemove, deleteField } from "firebase/firestore";
 import { DBContext } from '../db';
 import { AuthContext } from "../auth";
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export default function Groups() {
     const { currentUser } = useContext(AuthContext);
     const [addGroupModal, setAddGroupModal] = useState(false);
     const { fetchData, DB } = useContext(DBContext);
+    const nav = useNavigate();
 
     const handleLeaveGroup = async event => {
         event.preventDefault();
@@ -67,8 +68,8 @@ export default function Groups() {
 
     // this code might still be doodoo im not sure
     return(
-        <>
-            <div className="add-group-modal" style={{display: addGroupModal ? "block" : "none"}}  onClick={(event) => {if (event.target === event.currentTarget){setAddGroupModal(false)}}}>
+        <div className="content-group">
+            <div className="add-group-modal" style={{display: addGroupModal ? "block" : "none"}} onClick={(event) => {if (event.target === event.currentTarget){setAddGroupModal(false)}}}>
                 <form onSubmit={handleGroupCreation}>
                     <input type="button" className='cancel-add-group' value="X" onClick={() => setAddGroupModal(false)}></input>
                     <h1>Create New Group</h1>
@@ -77,19 +78,17 @@ export default function Groups() {
                     <button type="submit">Create Group</button>
                 </form>
             </div>
-            Groups
+            <p>Groups</p>
             <input type="button" onClick={() => setAddGroupModal(true)} value="Create New Group" />
             <div>
                 {DB["user"]["groups"].map(group => (
-                    <div key={group} data-groupid={group}>
-                    <p>{group}</p>
+                    <div key={group} data-groupid={group} className="group" onClick={(event) => {if (event.target === event.currentTarget){nav("/home/groups/" + group)}}}>
                     <p>{DB[group]["name"]}</p>
-                    <Link to={"/home/groups/" + group}>Group Page</Link>
                     <input type="button" value="Leave Group" onClick={handleLeaveGroup}/>
                     </div>
                 ))}
             </div>
             {/* Create group, leave group, view invites */}
-        </>
+        </div>
     )
 }
